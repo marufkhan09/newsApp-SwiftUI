@@ -14,14 +14,21 @@ struct ContentView: View {
     var body: some View {
         
         NavigationSplitView {
-            List {
-                ForEach(networkManager.posts) { post in
-                    HStack {
-                        Text("\(post.points!) ")
-                        Text(post.title!)
-                    }
-                }
-            }.navigationTitle("News")
+            if(networkManager.postsAvailable){
+                List {
+                 ForEach(networkManager.posts) { post in
+                     HStack {
+                         Text("\(post.points!) ")
+                         Text(post.title!)
+                     }
+                 }
+             }.navigationTitle("News")
+            }else {
+                ProgressView().progressViewStyle(.circular).scaleEffect(1.5).navigationTitle("News")
+
+            }
+           
+               
         } detail: {
             Text("Select")
         }

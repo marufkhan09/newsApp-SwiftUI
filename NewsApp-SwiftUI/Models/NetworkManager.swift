@@ -11,6 +11,7 @@ import Foundation
 class NetworkManager: ObservableObject {
     
     @Published var posts = [Post]()
+    @Published var postsAvailable = false
     
     
     func fetchData(){
@@ -26,6 +27,7 @@ class NetworkManager: ObservableObject {
                             let results = try decoder.decode(Results.self, from: safeData)
                             DispatchQueue.main.async {
                                 self.posts = results.hits
+                                self.postsAvailable = true
                             }
                         } catch {
                             print(error)
