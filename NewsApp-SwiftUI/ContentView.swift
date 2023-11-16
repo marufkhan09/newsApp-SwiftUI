@@ -8,17 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+   @ObservedObject var networkManager = NetworkManager()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        
+        NavigationSplitView {
+            List {
+                ForEach(networkManager.posts) { post in
+                    HStack {
+                        Text("\(post.points!) ")
+                        Text(post.title!)
+                    }
+                }
+            }.navigationTitle("News")
+        } detail: {
+            Text("Select")
         }
-        .padding()
+
+        .onAppear(perform: {
+            self.networkManager.fetchData()
+        })
     }
 }
 
 #Preview {
     ContentView()
 }
+
+
+
